@@ -114,33 +114,40 @@
 
 
     function ChatMessages() {
-
         // Creating a storage place for our message(data) array of objects and then generate the html for further use
-        const chatMessages = [{
-            message: "Hello buddyyy", 
-            sender: "user",
-            id: 'id1'
-        },{
-            message:"Heyy! buddy how can i help you", 
-            sender:"robot",
-            id: 'id2'
-        },{
-            message:"can you tell me todays date", 
-            sender:"user",
-            id: 'id3'  
-        },{
-            message:"Today is August 11",
-            sender:"robot",
-            id: 'id4'
-        }];
+        // useState = is basically a data that belongs to a component and can change over time
+
+        const array = React.useState(
+                [{
+                message: "Hello buddyyy", 
+                sender: "user",
+                id: 'id1'
+            },{
+                message:"Heyy! buddy how can i help you", 
+                sender:"robot",
+                id: 'id2'
+            },{
+                message:"can you tell me todays date", 
+                sender:"user",
+                id: 'id3'  
+            },{
+                message:"Today is August 11",
+                sender:"robot",
+                id: 'id4'
+            }]
+        )
+        const chatMessages = array[0];
+        const setChatMessages = array[1];
 
         function sendMessage() {
-            chatMessages.push({
-                message: 'test',
-                sender: 'user',
-                id: crypto.randomUUID()//for randomly generatiog the id everytime
-            })
-            console.log(chatMessages)
+            setChatMessages([
+                ...chatMessages,//this is used to copy the previous code and then move forward
+                {
+                    message: 'test',
+                    sender: 'user',
+                    id: crypto.randomUUID()//for randomly generatiog the id everytime
+                }
+            ]);
         }
         
         return(
