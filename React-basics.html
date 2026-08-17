@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React Basics</title>
+</head>
+
+<body>
+
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!--
+    babel is basically a compiler and translate other languages into js
+     we use babel because our browser only understand js not jsx(javascript xml) so we use babel library to translate it 
+     -->
+     
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+
+        const container = document.querySelector('.js-container');
+
+        //this is called jsx
+        const button = <button>Hello</button>
+
+        //to display multiple things we div element
+        const div = (
+            <div>
+                <button>heyyy</button>
+                <p>this is paragraph {2 + 2}</p>
+                <input /> 
+                <button>button</button>
+            </div>
+        )
+
+
+        //ReactDOM.createRoot() is used to set up react and we have to give it a html element inside the braket and .render is used to display something
+        ReactDOM.createRoot(container).render(div);
+
+    </script>
+
+</body>
+</html>
