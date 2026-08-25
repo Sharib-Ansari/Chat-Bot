@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>CHAT BOT</title>
 </head>
 
-<body> 
-   <!--
+<body>
+    <!--
       we are going to study about components in react. its basically a part of the websites components so that we can work on it in at a time or
       A component is a JavaScript function that returns the UI we want to display.
     -->
@@ -14,7 +15,7 @@
 
         Props are a way to pass data from a parent component to a child component.
         and props make our component reusable
-    -->  
+    -->
 
 
     <div class="js-container"></div>
@@ -23,63 +24,73 @@
 
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
-     
+
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
 
     <script type="text/babel">
 
-    function ChatInput() {
-        return (
-            <> {/* <></> these are called fragments it is used for removing the extra div from our code */} 
-                <input 
-                    placeholder="Heyyy! Buddy how can i help you" 
-                    size="50"
-                />
-                <button>Send</button>
-            </>
-        );
-    }
+        function ChatInput() {
 
-    function ChatMessage({message, sender}) {
-       //console.log(props); o/p hello budyyy
+            const[inputText, setInputText] = React.useState("")
 
-       //  const message = props.message;
-       //  const sender = props.sender;
+            //event = Information about what happened
+            function saveInputText(event) {
+             setInputText(event.target.value);
+            }
 
-       // we can write it is as 
-       // const {message, sender} = props;// this is called destructuring it is same as these const sender = props.sender; 
-       
-       /*
-       if(sender === 'robot'){
-        return(
-            <div>
-                <img src="robot.png" width="50" />
-                {message}                
-            </div> 
-        );
-       }
-        // instead of using if statemnts we can directly it in our jsx by using the guard operator (&&) like
-       */
-       
-       return(
-        <div>
-            {sender === 'robot' && (
-                <img src="images/robot.png" width="50" />
-            )}
+            return (
+                <> {/* <></> these are called fragments it is used for removing the extra div from our code */}
+                {/*onChange = runs a function when we change the text inside an input */}
+                    <input
+                        placeholder="Heyyy! Buddy how can i help you"
+                        size="50"
+                        onChange={saveInputText}
+                    />
+                    <button>Send</button>
+                </>
+            );
+        }
 
-            {message}
+        function ChatMessage({ message, sender }) {
+            //console.log(props); o/p hello budyyy
 
-            {sender === 'user' && (
-                <img src="images/user.png" width="50" />
-            )}
-            
-        </div>
-       )
-    }
+            //  const message = props.message;
+            //  const sender = props.sender;
 
-    //const app = (
+            // we can write it is as 
+            // const {message, sender} = props;// this is called destructuring it is same as these const sender = props.sender; 
+
+            /*
+            if(sender === 'robot'){
+             return(
+                 <div>
+                     <img src="robot.png" width="50" />
+                     {message}                
+                 </div> 
+             );
+            }
+             // instead of using if statemnts we can directly it in our jsx by using the guard operator (&&) like
+            */
+
+            return (
+                <div>
+                    {sender === 'robot' && (
+                        <img src="images/robot.png" width="50" />
+                    )}
+
+                    {message}
+
+                    {sender === 'user' && (
+                        <img src="images/user.png" width="50" />
+                    )}
+
+                </div>
+            )
+        }
+
+        //const app = (
         <>
-        {/*
+            {/*
         {/* we can also write it as
                 {ChatInput()} orrr
 
@@ -104,86 +115,113 @@
                 sender="robot"
             />
             */}
-            
-            
-        
+
+
+
         </>
-        
-    //);
+
+        //);
 
 
 
-    function ChatMessages() {
-        // Creating a storage place for our message(data) array of objects and then generate the html for further use
-        // useState = is basically a data that belongs to a component and can change over time
+        function ChatMessages() {
+            // Creating a storage place for our message(data) array of objects and then generate the html for further use
+            // useState = is basically a data that belongs to a component and can change over time
+            /*
+                useState gives us two values:
 
-        const array = React.useState(
+                [0] → The current state (our chat messages)
+                [1] → A function used to update the state
+           */
+
+            const [chatMessages, setChatMessages] = React.useState(
                 [{
-                message: "Hello buddyyy", 
-                sender: "user",
-                id: 'id1'
-            },{
-                message:"Heyy! buddy how can i help you", 
-                sender:"robot",
-                id: 'id2'
-            },{
-                message:"can you tell me todays date", 
-                sender:"user",
-                id: 'id3'  
-            },{
-                message:"Today is August 11",
-                sender:"robot",
-                id: 'id4'
-            }]
-        )
-        const chatMessages = array[0];
-        const setChatMessages = array[1];
+                    message: "Hello buddyyy",
+                    sender: "user",
+                    id: 'id1'
+                }, {
+                    message: "Heyy! buddy how can i help you",
+                    sender: "robot",
+                    id: 'id2'
+                }, {
+                    message: "can you tell me todays date",
+                    sender: "user",
+                    id: 'id3'
+                }, {
+                    message: "Today is August 11",
+                    sender: "robot",
+                    id: 'id4'
+                }]
+            )
 
-        function sendMessage() {
-            setChatMessages([
-                ...chatMessages,//this is used to copy the previous code and then move forward
-                {
-                    message: 'test',
-                    sender: 'user',
-                    id: crypto.randomUUID()//for randomly generatiog the id everytime
-                }
-            ]);
+            
+            /*
+             const[chatMessages, setChatMessages] = array;
+
+             array[0] contains the current chat messages and continue from first element
+             const chatMessages = array[0];
+
+             array[1] contains the function used to update the chat messages
+             const setChatMessages = array[1];
+            */
+
+            function sendMessage() {
+                /*
+                    Create a new array:
+
+                    1. Copy all previous messages using ...
+                    2. Add a new message at the end
+               */
+                setChatMessages([
+                    ...chatMessages,//this is used to copy the previous code and then move forward
+                    {
+                        message: 'test',
+                        sender: 'user',
+                        id: crypto.randomUUID()//for randomly generatiog the id everytime
+                    }
+                ]);
+            }
+
+            return (
+                <>
+                    <button onClick={sendMessage}>Send Message</button>
+
+                    {/*
+                        Go through every object in chatMessages
+                        and create one ChatMessage component for each.
+                    */}
+
+                    {chatMessages.map((chatMessages) => {
+                        return (
+                            <ChatMessage
+                                message={chatMessages.message}
+                                sender={chatMessages.sender}
+                                key={chatMessages.id}
+                            />
+                        );
+                    })}{/*we generating the message(html) through js*/}
+                </>
+            )
         }
-        
-        return(
-            <>
-               <button onClick={sendMessage}>Send Message</button>
-               
-               {chatMessages.map((chatMessages) => {
-                    return(
-                        <ChatMessage
-                        message={chatMessages.message}
-                        sender={chatMessages.sender}
-                        key={chatMessages.id}
-                        />
-                    );
-                })}{/*we generating the message(html) through js*/}
-            </>
-        )
-    }
 
-    function App() {
-        
+        function App() {
 
-        return(
-            <>
-                <ChatInput />
-                <ChatMessages />
-                
-            </>
-        );
-    }
 
-    const container = document.querySelector('.js-container');
+            return (
+                <>
+                    <ChatInput />
+                    <ChatMessages />
 
-    ReactDOM.createRoot(container).render(<App />);
+                </>
+            );
+        }
 
-</script>
+        const container = document.querySelector('.js-container');
+
+        ReactDOM.createRoot(container).render(<App />);
+
+    </script>
 
 </body>
+
 </html>

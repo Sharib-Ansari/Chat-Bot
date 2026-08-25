@@ -26,6 +26,24 @@
         //this is called jsx
         const button = <button>Hello</button>
 
+        //this is a component and props
+        function Components ({message}) {
+
+            //const message = props.message
+
+            return(
+               <> {/* <></> these are called fragments it is used for removing the extra div from our code */} 
+                    <input 
+                        placeholder="Heyyy! Buddy how can i help you" 
+                        size="50"
+                    />
+                    <button>Send</button>
+                     
+                    {message};
+               </>
+            )
+        }
+
         //to display multiple things we div element
         const div = (
             <div>
@@ -33,6 +51,9 @@
                 <p>this is paragraph {2 + 2}</p>
                 <input /> 
                 <button>button</button>
+
+                <Components message="this is prop or property" />
+
             </div>
         )
 
