@@ -29,13 +29,26 @@
 
     <script type="text/babel">
 
-        function ChatInput() {
+        function ChatInput({chatMessages, setChatMessages}) {
 
             const[inputText, setInputText] = React.useState("")
 
             //event = Information about what happened
             function saveInputText(event) {
              setInputText(event.target.value);
+            }
+
+            function sendMessage(){
+              console.log(inputText)
+              setChatMessages([
+                    ...chatMessages,//this is used to copy the previous code and then move forward
+                    {
+                        message: inputText,
+                        sender: 'user',
+                        id: crypto.randomUUID()//for randomly generatiog the id everytime
+                    }
+                ]);
+                setInputText('');//to make the text empty in input so we dont wnt to refressh again and again
             }
 
             return (
@@ -45,8 +58,11 @@
                         placeholder="Heyyy! Buddy how can i help you"
                         size="50"
                         onChange={saveInputText}
+                        value={inputText}//it is used change the text inside input so we dont wnt to refressh again and again  
                     />
-                    <button>Send</button>
+                    <button
+                        onClick={sendMessage}
+                    >Send</button>
                 </>
             );
         }
@@ -124,7 +140,51 @@
 
 
 
-        function ChatMessages() {
+        function ChatMessages({chatMessages}) {
+
+
+           //how we actually send message by pressing the send button here is the main logic that we use in above in send button
+           // function sendMessage() {
+                /*
+                    Create a new array:
+
+                    1. Copy all previous messages using ...
+                    2. Add a new message at the end
+               */
+              
+               /*
+                    setChatMessages([
+                        ...chatMessages,//this is used to copy the previous code and then move forward
+                        {
+                            message: 'test',
+                            sender: 'user',
+                            id: crypto.randomUUID()//for randomly generatiog the id everytime
+                        }
+                    ]);
+               */ 
+            //}
+
+            return (
+                <>
+                    {/*
+                        Go through every object in chatMessages
+                        and create one ChatMessage component for each.
+                    */}
+
+                    {chatMessages.map((chatMessages) => {
+                        return (
+                            <ChatMessage
+                                message={chatMessages.message}
+                                sender={chatMessages.sender}
+                                key={chatMessages.id}
+                            />
+                        );
+                    })}{/*we generating the message(html) through js*/}
+                </>
+            )
+        }
+
+        function App() {
             // Creating a storage place for our message(data) array of objects and then generate the html for further use
             // useState = is basically a data that belongs to a component and can change over time
             /*
@@ -153,8 +213,6 @@
                     id: 'id4'
                 }]
             )
-
-            
             /*
              const[chatMessages, setChatMessages] = array;
 
@@ -164,53 +222,18 @@
              array[1] contains the function used to update the chat messages
              const setChatMessages = array[1];
             */
-
-            function sendMessage() {
-                /*
-                    Create a new array:
-
-                    1. Copy all previous messages using ...
-                    2. Add a new message at the end
-               */
-                setChatMessages([
-                    ...chatMessages,//this is used to copy the previous code and then move forward
-                    {
-                        message: 'test',
-                        sender: 'user',
-                        id: crypto.randomUUID()//for randomly generatiog the id everytime
-                    }
-                ]);
-            }
-
-            return (
-                <>
-                    <button onClick={sendMessage}>Send Message</button>
-
-                    {/*
-                        Go through every object in chatMessages
-                        and create one ChatMessage component for each.
-                    */}
-
-                    {chatMessages.map((chatMessages) => {
-                        return (
-                            <ChatMessage
-                                message={chatMessages.message}
-                                sender={chatMessages.sender}
-                                key={chatMessages.id}
-                            />
-                        );
-                    })}{/*we generating the message(html) through js*/}
-                </>
-            )
-        }
-
-        function App() {
+           
 
 
             return (
                 <>
-                    <ChatInput />
-                    <ChatMessages />
+                    <ChatInput
+                        chatMessages={chatMessages}
+                        setChatMessages={setChatMessages}
+                    />
+                    <ChatMessages 
+                        chatMessages={chatMessages}
+                    />
 
                 </>
             );
