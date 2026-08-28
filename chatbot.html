@@ -24,8 +24,9 @@
 
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
-
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
 
     <script type="text/babel">
 
@@ -40,14 +41,30 @@
 
             function sendMessage(){
               console.log(inputText)
-              setChatMessages([
+
+              const newChatMessages = [
                     ...chatMessages,//this is used to copy the previous code and then move forward
                     {
                         message: inputText,
                         sender: 'user',
                         id: crypto.randomUUID()//for randomly generatiog the id everytime
                     }
+                ]
+
+              setChatMessages(newChatMessages);
+
+                //this is used to get the response from the Bot
+                const response = Chatbot.getResponse(inputText);
+                console.log(response);
+                setChatMessages([
+                    ...newChatMessages,//this is used to copy the previous code and then move forward
+                    {
+                        message: response,
+                        sender: 'robot',
+                        id: crypto.randomUUID()//for randomly generatiog the id everytime
+                    }
                 ]);
+
                 setInputText('');//to make the text empty in input so we dont wnt to refressh again and again
             }
 
