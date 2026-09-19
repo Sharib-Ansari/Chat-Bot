@@ -39,7 +39,7 @@
              setInputText(event.target.value);
             }
 
-            function sendMessage(){
+            async function sendMessage(){
               console.log(inputText)
 
               const newChatMessages = [
@@ -54,8 +54,7 @@
               setChatMessages(newChatMessages);
 
                 //this is used to get the response from the Bot
-                const response = Chatbot.getResponse(inputText);
-                console.log(response);
+                const response = await Chatbot.getResponseAsync(inputText);
                 setChatMessages([
                     ...newChatMessages,//this is used to copy the previous code and then move forward
                     {
