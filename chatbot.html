@@ -33,6 +33,7 @@
         function ChatInput({chatMessages, setChatMessages}) {
 
             const[inputText, setInputText] = React.useState("")
+            const [isLoading, setIsLoading] = React.useState(false);
 
             //event = Information about what happened
             function saveInputText(event) {
@@ -52,6 +53,8 @@
                 ]
 
               setChatMessages(newChatMessages);
+              setInputText('');//to make the text empty in input so we dont wnt to refressh again and again
+              setIsLoading(true); 
 
                 //this is used to get the response from the Bot
                 const response = await Chatbot.getResponseAsync(inputText);
@@ -63,8 +66,8 @@
                         id: crypto.randomUUID()//for randomly generatiog the id everytime
                     }
                 ]);
-
-                setInputText('');//to make the text empty in input so we dont wnt to refressh again and again
+                setIsLoading(false);
+    
             }
 
             return (
@@ -90,6 +93,8 @@
                     <button
                         onClick={sendMessage}
                     >Send</button>
+                    {isLoading && <div>Loading...</div>}
+
                 </>
             );
         }
