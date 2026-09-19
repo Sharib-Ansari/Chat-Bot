@@ -75,7 +75,18 @@
                         placeholder="Heyyy! Buddy how can i help you"
                         size="50"
                         onChange={saveInputText}
-                        value={inputText}//it is used change the text inside input so we dont wnt to refressh again and again  
+                        value={inputText}//it is used change the text inside input so we dont wnt to refressh again and again 
+                        
+                        // onKeyDown runs a function whenever a keyboard key is pressed.
+                       onKeyDown={(event) => {
+                           if (event.key === 'Enter') {
+                             sendMessage();
+                           }
+
+                            if (event.key === 'Escape') {
+                                setInputText('');
+                            }
+                        }}
                     />
                     <button
                         onClick={sendMessage}
