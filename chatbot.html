@@ -30,10 +30,10 @@
 
     <script type="text/babel">
 
-        function ChatInput({chatMessages, setChatMessages}) {
+        function ChatInput({chatMessages, setChatMessages, isLoading, setIsLoading}) {
 
             const[inputText, setInputText] = React.useState("")
-            const [isLoading, setIsLoading] = React.useState(false);
+
 
             //event = Information about what happened
             function saveInputText(event) {
@@ -172,7 +172,7 @@
 
 
 
-        function ChatMessages({chatMessages}) {
+        function ChatMessages({chatMessages, isLoading}) {
 
 
            //how we actually send message by pressing the send button here is the main logic that we use in above in send button
@@ -212,6 +212,12 @@
                             />
                         );
                     })}{/*we generating the message(html) through js*/}
+                    {isLoading && (
+                        <ChatMessage
+                            message="Loading..."
+                            sender="robot"
+                        />
+                    )}
                 </>
             )
         }
@@ -254,7 +260,7 @@
              array[1] contains the function used to update the chat messages
              const setChatMessages = array[1];
             */
-           
+            const [isLoading, setIsLoading] = React.useState(false);
 
 
             return (
@@ -262,9 +268,12 @@
                     <ChatInput
                         chatMessages={chatMessages}
                         setChatMessages={setChatMessages}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                     />
                     <ChatMessages 
                         chatMessages={chatMessages}
+                        isLoading = {isLoading}
                     />
 
                 </>
